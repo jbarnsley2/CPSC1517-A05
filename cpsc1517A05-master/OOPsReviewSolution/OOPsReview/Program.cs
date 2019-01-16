@@ -10,7 +10,6 @@ namespace OOPsReview
     {
         static void Main(string[] args)
         {
-<<<<<<< HEAD
 
             //new cause an instance (occurance) of the specified
             //   class to be created and placed in the
@@ -189,8 +188,6 @@ namespace OOPsReview
             Console.WriteLine("\nPlayer1: Wins: {0}  Player2: Wins: {1}  Total Draws: {2}",
                 wins1, wins2, draws);
 
-=======
->>>>>>> 4df8f62c79988cb1c7d52ebd4c7c7de106dcbe66
         }
     }
 }
