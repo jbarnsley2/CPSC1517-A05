@@ -103,6 +103,11 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Controls\Textboxes.cshtml" />
+    <Content Include="Controls\RadioButtons.cshtml" />
+    <Content Include="Controls\CheckBoxes.cshtml" />
+    <Content Include="Controls\DropDownList.cshtml" />
+    <Content Include="Menu.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -114,7 +119,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Layout.cshtml" />
+    <Content Include="_Layout.cshtml" />
     <Content Include="Default.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />

@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>@Page.Title</title>
+    @RenderSection("head", required: false)
+
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.js"></script>
+    <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
+</head>
+<body>
+    <!--This will be the menu area-->
+    <div class="navbar navbar-default navbar-fixed-top">
+        <!--brand area of the menu-->
+        <div class="navbar-header">
+            <a class="navbar-brand" style="font-size:x-large">
+                <strong>Razor Samples</strong>
+            </a>
+        </div>
+        <!--menu: menu root items-->
+        <ul class="nav navbar-nav">
+            <!--root menu item-->
+            <li><a href="@Href("~/Default.cshtml")"Home"</a></li>
+            <!-- Create a drop down menu list (submenus)-->
+            <li class="dropdown">
+                <!-- toggle root menu item-->
+                <a href="#"class="dropdown-toggle" data-toggle="dropdown">Controls<b class="caret"></b></a>
+                <!-- code the actual submenu items-->
+                <ul class="dropdown-menu">
+                    <li><a href="@Href("~/Controls/TextBoxes.cshtml")"TextBoxes"</a></li>
+                    <li><a href="@Href("~/Controls/RadioButtons.cshtml")"RadioButtons"</a></li>
+                    <li><a href="@Href("~/Controls/CheckBoxes.cshtml")"CheckBoxes"</a></li>
+                    <li><a href="@Href("~/Controls/DropDownList.cshtml")"DropDownList"</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+   
+    <div class="container-fluid">
+        <div class="jumbotron">
+            @RenderSection("banner")
+        </div>
+
+        @RenderBody()
+        @RenderSection("footer", required: false)
+    </div>
+</body>
+</html>
