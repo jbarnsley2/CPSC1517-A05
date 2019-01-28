@@ -11,7 +11,7 @@ namespace OOPsReview
         static void Main(string[] args)
         {
 
-            //new cause an instance (occurance) of the specified
+            //new causes an instance (occurance) of the specified
             //   class to be created and placed in the
             //   receiving variable
             //the variable is a pointer address to the actual
@@ -23,12 +23,12 @@ namespace OOPsReview
             //   a pointer which can hold a physical instance
             Turn theTurn;
 
-            //new cause the constructor of a class to execute
+            //new causes the constructor of a class to execute
             //   and a phyiscal instance to be created
-            Die player1 = new Die(); // default
-            Die player2 = new Die(6, "Green");
+            Die player1 = new Die();            //default
+            Die player2 = new Die(6, "Green");  //greedy
 
-            // track the game plays
+            //track the game plays
             List<Turn> rounds = new List<Turn>();
 
             string menuChoice = "";
@@ -51,13 +51,9 @@ namespace OOPsReview
                         case "A":
                             {
                                 //Die is a non-static class
-
-                                player1.Roll(); //generate new FaceValue
-                                // player2.Roll(); //generate new FaceValue
-                                //player2.FaceValue = player2.Sides;
-
-                                //generate a new FaceValue
-                                //generate a new FaceValue
+                                player1.Roll();//generate a new FaceValue
+                                player2.Roll();//generate a new FaceValue
+                                
 
                                 // save the roll 
                                 //method a) default constructor and individual setting
@@ -65,30 +61,26 @@ namespace OOPsReview
                                 theTurn.Player1Roll = player1.FaceValue;
                                 theTurn.Player2Roll = player2.FaceValue;
 
-
                                 //method b) greedy constructor
                                 //theTurn = new Turn(player1.FaceValue, player2.FaceValue);
-
 
                                 //display the round results
                                 Console.WriteLine("Player1 rolled {0}", player1.FaceValue);
                                 Console.WriteLine("Player2 rolled {0}", player2.FaceValue);
                                 if (player1.FaceValue > player2.FaceValue)
                                 {
-                                    Console.WriteLine("Player1 wins");
+                                    Console.WriteLine("player 1 wins");
                                 }
                                 else if (player2.FaceValue > player1.FaceValue)
                                 {
-                                    Console.WriteLine("Player2 wins");
+                                    Console.WriteLine("player 2 wins");
                                 }
                                 else
                                 {
-                                    Console.WriteLine("It's a draw");
-
+                                    Console.WriteLine("it is a draw");
                                 }
-
                                 //track the round
-                                rounds.Add(theTurn); //the address of the address
+                                rounds.Add(theTurn);
 
                                 break;
                             }
@@ -163,10 +155,10 @@ namespace OOPsReview
             int wins2 = 0;
             int draws = 0;
 
-            //traverse the List<Turn> to calculate wins, losses, and draws
-            foreach (Turn item in rounds) //var can also be used, but using Turn is faster because it is specific
+            //travser the List<Turn> to calculate wins, losses, and draws
+            foreach(Turn item in rounds)
             {
-                if (item.Player1Roll > item.Player2Roll)
+                if (item.Player1Roll >item.Player2Roll)
                 {
                     wins1 = wins1 + 1;
                 }
@@ -177,11 +169,8 @@ namespace OOPsReview
                 else
                 {
                     draws++;
-
                 }
-
             }
-
 
             //display the results
             Console.WriteLine("\n Total Rounds: " + (wins1 + wins2 + draws).ToString());
@@ -189,5 +178,6 @@ namespace OOPsReview
                 wins1, wins2, draws);
 
         }
+
     }
 }

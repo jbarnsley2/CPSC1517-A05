@@ -86,11 +86,7 @@ namespace OOPsReview
         //    the property
         // usually use when there is no need for any internal validation or other
         //    property logic
-<<<<<<< HEAD
-        public int FaceValue { get; private set; } //prevents outside user from changing FaceValue (stops cheating)
-=======
-        public int FaceValue { get; set; }
->>>>>>> 4df8f62c79988cb1c7d52ebd4c7c7de106dcbe66
+        public int FaceValue { get; private set; }
 
         public string Color
         {
