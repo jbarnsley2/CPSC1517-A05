@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@Page.Title</title>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+
+    @RenderSection("head", required: false)
+</head>
+<body>
+    <a href="~/_Layout.cshtml">~/_Layout.cshtml</a>
+    @section pagetitle { Exercise01: Basic Form Processing }
+    <div class="container-fluid">
+        @RenderPage("~/index.cshtml")
+        <br /><br />
+        <div class="jumbotron">
+            @RenderSection("banner")
+        </div>
+
+        @RenderBody()
+        @RenderSection("footer", required: false)
+
+    </div>
+</body>
+</html>
