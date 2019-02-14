@@ -1,0 +1,132 @@
+﻿@{
+    /**/
+
+
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Exercise01";
+
+
+    var CustomerName = Request.Form["CustomerName"];
+    var thebutton = Request.Form["formbutton"];
+    var mealchoices = "";
+}
+@section head{
+    <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
+}
+@section banner{
+    <h1>Exercise01: Basic Form Processing</h1>
+}
+@if (IsPost)
+{
+    if (thebutton.Equals("Clear"))
+    {
+        mealchoices = "";
+        CustomerName = null;
+        CustomerName = "";
+
+
+    }
+    else
+    {
+        if (string.IsNullOrEmpty(CustomerName))
+        {
+            CustomerName = "";
+            CustomerName = null;
+            <p>
+                <span style="color:firebrick">
+                    <strong>You did not enter a name.</strong>
+                </span>
+            </p>
+        }
+        
+            mealchoices = Request.Form["foodgroup"];
+            if (string.IsNullOrEmpty(mealchoices))
+            {
+
+                mealchoices = "";
+
+            <p>
+                <span style="color:firebrick">
+                    <strong>You did not make a meal selection.</strong>
+                </span>
+            </p>
+            }
+    
+        else
+        {
+            //the result of the input data is a set of
+            //   comma separated values in a string
+            //we will use the string method .Split(delimiter)
+            //   to break apart this set of values
+            //   into an Array of strings.
+            //delimiter for csv is a character comma (',')
+            <p>
+                @CustomerName, you made the following meal selection:
+                <ul>
+                    @foreach (var platform in mealchoices.Split(','))
+                    {
+                        <li>@platform</li>
+                    }
+                </ul>
+            </p>
+        }
+    }
+
+}
+else
+{
+    CustomerName = null;
+    mealchoices = "";
+
+}
+
+
+
+<form id="EX01" method="post">
+    <div class="row">
+        <div class="col-md-3">
+
+            <span>Customer Name: </span><br />
+
+            <input type="text" id="CustomerName" name="CustomerName"
+                   value="@CustomerName" />
+
+        </div>
+        <div class="col-md-9">
+            <label id="foodgroup">Choose you meal items: </label><br />
+            <input type="checkbox" id="foodgroup" name="foodgroup"
+                   value="Steak"
+                   @(Array.IndexOf(mealchoices.Split(','), "Steak") >= 0 ? "checked" : "") />Steak<br />
+            <input type="checkbox" id="foodgroup" name="foodgroup"
+                   value="Seafood"
+                   @(Array.IndexOf(mealchoices.Split(','), "Seafood") >= 0 ? "checked" : "") />Seafood<br />
+            <input type="checkbox" id="foodgroup" name="foodgroup"
+                   value="Fruit"
+                   @(Array.IndexOf(mealchoices.Split(','), "Fruit") >= 0 ? "checked" : "") />Fruit<br />
+            <input type="checkbox" id="foodgroup" name="foodgroup"
+                   value="Vegetables"
+                   @(Array.IndexOf(mealchoices.Split(','), "Veggies") >= 0 ? "checked" : "") />Vegetables<br />
+            <input type="checkbox" id="foodgroup" name="foodgroup"
+                   value="Dessert"
+                   @(Array.IndexOf(mealchoices.Split(','), "Dessert") >= 0 ? "checked" : "") />Dessert<br />
+
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary"
+            id="formbutton" name="formbutton" value="submit">
+        Submit
+    </button>
+    <button type="submit" class="btn"
+            id="formbutton" name="formbutton" value="clear">
+        Reset
+    </button>
+</form>
+
+<br />
+<br />
+<br />
+@section footer{
+    &copy; CPSC1517 NAIT all rights reserved
+}
+
