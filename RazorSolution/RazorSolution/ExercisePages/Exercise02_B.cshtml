@@ -1,9 +1,66 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+﻿@{ 
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Exercise02_B";
 
-</body>
-</html>
+    var artistid = Request.QueryString["aid"];
+
+    if (string.IsNullOrEmpty(artistid))
+    {
+        Response.Redirect("Exercise02_B_cshtml.cshtml");
+    }
+
+    var db = Database.Open("Chinook");
+    var scalarcommand = "SELECT Name"
+                        + "FROM Artists"
+                        + "WHERE Artistid = @0";
+    var name = db.QueryValue(scalarcommand, artistid);
+
+    var querycommand = "SELECT Albumid, Title, ReleaseYear, ReleaseLabel"
+                        + "FROM Albums"
+                        + "WHERE Artistid = @0"
+                        + "ORDER BY Title";
+
+    var results = db.Query(querycommand, artistid);
+
+    var gridinstance = new WebGrid(results, rowsperpage: 5);
+
+}
+
+
+
+@section banner{
+    <h1>Execise 2 : Database Query</h1>
+}
+<div class="row">
+    <div class="col-md-12">
+        <span style="font-size:x-large"><strong>Products for @categoryname</strong></span>
+
+        <!--Customize the WebGrid instance display-->
+        @gridinstance.GetHtml(
+             tableStyle: "table table-bordered table-striped table-hover",
+             mode: WebGridPagerModes.All,
+             firstText: "Start",
+             lastText: "End",
+            columns: gridinstance.Columns(
+                gridinstance.Column(columnName: "ProductID", header: "ID",
+                canSort: true),
+                gridinstance.Column(columnName: "ProductName", header: "Product"),
+                gridinstance.Column(columnName: "UnitPrice", header: "$",
+                 format: (item) => item.UnitPrice.ToString("0.00")),
+                gridinstance.Column(columnName: "Discontinued", header: "Disc",
+                canSort: false,
+                format: @<input name="Discontinued" type="checkbox"
+                                value="@item.Discontinued"
+                                @(item.Discontinued == true ? "checked" : null)
+                                disabled="disabled" />),
+                gridinstance.Column(columnName: "FakeDate",
+                format: (item) => item.FakeDate.ToString("MMM dd, yyyy")),
+                gridinstance.Column(header: "",
+                format: @<text>
+                    <a href="~/DBPages/WebGridDestination.cshtml?pid=@item.ProductID"
+                       onclick="return confirm('Are you sure you wish to view the product details of @item.ProductName')">View</a>
+                </text>)
+                ))
+
+    </div>
+</div>
