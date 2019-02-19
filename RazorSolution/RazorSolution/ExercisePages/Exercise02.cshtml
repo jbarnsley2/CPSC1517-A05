@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
-    Page.Title = "DB - Single Query";
+    Page.Title = "Exercise02";
 
     var searcharg = Request.Form["searcharg"];
     var thebutton = Request.Form["formButton"];
@@ -87,8 +87,20 @@
         <div class="col-md-6">
             <label for="artistlist"> Select your artist: </label><br />
             <select id="artistlist" name="artitstlist">
+                <option value="0"> select ...</option>
+                @foreach (var artistitem in ddlResults)
+                {
+                    <option value="artistitem.ArtistID">
+                        @artistitem[1]
+                    </option>
+                }
 
             </select>
+            &nbsp;&nbsp;
+            <button type="submit" id="formbutton" name="formbutton"
+                    value="search" class="btn btn-primary">
+                Fetch Album
+            </button>
         </div>
 
       </div>
