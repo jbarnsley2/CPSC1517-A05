@@ -9,17 +9,11 @@
     var artistlist = Request.Form["artistlist"];
 
 
-
-    //remember, on the 1st page pass, the form has NOT been displayed
-    //searcharg will be null
-    //looking up a sql table by primary key using a value of null
-    //     will not be successful
     if (string.IsNullOrEmpty(searcharg))
     {
         searcharg = "0";
     }
 
-    //connect to your database "pipeline"
     var db = Database.Open("Chinook");
 
 
@@ -44,8 +38,7 @@
     }
     else
     {
-        //test to see if any record was returned from the query
-        //if no record was returned then the results will be null
+     
         if (results == null)
         {
             <p><span style="color:blue">No data found for region id @searcharg</span></p>
