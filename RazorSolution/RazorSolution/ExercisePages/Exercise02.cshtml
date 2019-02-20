@@ -27,13 +27,8 @@
                     + "FROM Artists "
                     + "WHERE Name = @0"
                     + "ORDER BY Name";
+    var ddlResults = db.Query(querycommand);
 
-    //execute the commmand on the connected database
-    //capture the results of the execution
-    //.QuerySingle() used when one expects a single record to be returned
-    //.Query() used when one expects 0, 1 or more records to be returned
-    //.QueryValue() used when one expects a single value (NOT RECORD) to be returned
-    var results = db.QuerySingle(querycommand, searcharg);
 
 }
 @section banner{
@@ -88,10 +83,10 @@
             <label for="artistlist"> Select your artist: </label><br />
             <select id="artistlist" name="artitstlist">
                 <option value="0"> select ...</option>
-                @foreach (var artistitem in ddlResults)
+                @foreach (var artistid in ddlResults)
                 {
                     <option value="artistitem.ArtistID">
-                        @artistitem[1]
+                        @artistid[1]
                     </option>
                 }
 
