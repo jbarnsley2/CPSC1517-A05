@@ -29,33 +29,48 @@
         }
 
     }
-    catch (Exception)
+    catch 
     {
         mealchoices = Request.Form["foodgroup"];
-        if (string.IsNullOrEmpty(mealchoices) || string.IsNullOrEmpty(CustomerName))
+        if (string.IsNullOrEmpty(mealchoices))
         {
             mealchoices = "";
-            CustomerName = "";
+      
             <p>
                 <span style="color:firebrick">
-                    <strong>You have not entered a name or made a meal selection</strong>
+                    <strong>You have not made a meal selection</strong>
                 </span>
             </p>
         }
 
+
+
     }
-    finally
+    catch (Exception )
+    {
+
+        if (string.IsNullOrEmpty(CustomerName))
+        {
+            CustomerName = "";
+            <p>
+                <span style="color:firebrick">
+                    <strong>You have not entered a name</strong>
+                </span>
+            </p>
+        }
+    }
+    else
     {
         mealchoices = Request.Form["foodgroup"];
-        <p>
+        < p >
             @CustomerName, you made the following meal selections
-        <ul>
-            @foreach (var platform in mealchoices.Split(','))
+        < ul >
+            @foreach(var platform in mealchoices.Split(','))
             {
-                <li>@platform</li>
+                < li > @platform </ li >
             }
-        </ul>
-    </p>
+        </ ul >
+    </ p >
     }
 }
 

@@ -8,14 +8,16 @@
     var partialstring = "%" + yourtextboxvalue + "%";
     var artistlist = Request.Form["artistlist"];
 
+    if (artistlist == null)
+    {
+        artistlist = "0";
+    }
+    var db = Database.Open("Chinook");
 
     if (string.IsNullOrEmpty(searcharg))
     {
         searcharg = "0";
     }
-
-    var db = Database.Open("Chinook");
-
 
     var querycommand = "SELECT ArtistID, Name "
                     + "FROM Artists "
@@ -38,10 +40,10 @@
     }
     else
     {
-     
-        if (results == null)
+    
+        if (querycommand == null)
         {
-            <p><span style="color:blue">No data found for region id @searcharg</span></p>
+            <p><span style="color:blue">No data found for @searcharg</span></p>
           
         }
         else

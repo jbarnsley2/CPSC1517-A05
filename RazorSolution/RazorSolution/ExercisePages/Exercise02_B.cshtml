@@ -22,7 +22,7 @@
 
     var results = db.Query(querycommand, artistid);
 
-    var gridinstance = new WebGrid(results, rowsperpage: 5);
+    var gridinstance = new WebGrid(results, rowsPerPage: 5);
 
 }
 
@@ -33,7 +33,7 @@
 }
 <div class="row">
     <div class="col-md-12">
-        <span style="font-size:x-large"><strong>Products for @categoryname</strong></span>
+        <span style="font-size:x-large"><strong>Albums of @name</strong></span>
 
         <!--Customize the WebGrid instance display-->
         @gridinstance.GetHtml(
