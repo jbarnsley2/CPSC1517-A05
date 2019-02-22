@@ -42,19 +42,12 @@
              firstText: "Start",
              lastText: "End",
             columns: gridinstance.Columns(
-                gridinstance.Column(columnName: "ProductID", header: "ID",
+                gridinstance.Column(columnName: "AlbumID", header: "ID",
                 canSort: true),
-                gridinstance.Column(columnName: "ProductName", header: "Product"),
-                gridinstance.Column(columnName: "UnitPrice", header: "$",
-                 format: (item) => item.UnitPrice.ToString("0.00")),
-                gridinstance.Column(columnName: "Discontinued", header: "Disc",
-                canSort: false,
-                format: @<input name="Discontinued" type="checkbox"
-                                value="@item.Discontinued"
-                                @(item.Discontinued == true ? "checked" : null)
-                                disabled="disabled" />),
-                gridinstance.Column(columnName: "FakeDate",
-                format: (item) => item.FakeDate.ToString("MMM dd, yyyy")),
+                gridinstance.Column(columnName: "Title", header: "Title"),
+                gridinstance.Column(columnName: "ReleaseYear", header: "Released"),
+                gridinstance.Column(columnName: "ReleaseLabel", header: "Label"),
+                
                 gridinstance.Column(header: "",
                 format: @<text>
                     <a href="~/DBPages/WebGridDestination.cshtml?pid=@item.ProductID"
