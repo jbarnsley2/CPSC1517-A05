@@ -1,35 +1,37 @@
 ﻿@{
-                /**/
+    /**/
 
 
-                Layout = "~/_Layout.cshtml";
-                Page.Title = "Exercise03";
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Exercise03";
 
-                var thebutton = Request.Form["formButton"];
+    var thebutton = Request.Form["formButton"];
 
-                //variables to hold values for the Product record fields
-                var Title = "";
-                var ArtistID = "";
-                var ReleaseYear = "";
-                var Releaselabel = "";
+    //variables to hold values for the Product record fields
+    var Title = "";
+    var ArtistID = "";
+    var Name = "";
+    var ReleaseYear = "";
+    var Releaselabel = "";
+    var clear = "";
 
-                var db = Database.Open("Chinook");
+    var db = Database.Open("Chinook");
 
-                var artCommand = "Select ArtistID, Name "
-                                + "From Artists "
-                                + "Order By Name";
-                var artResults = db.Query(artCommand);
+    var artCommand = "Select ArtistID, Name "
+                    + "From Artists "
+                    + "Order By Name";
+    var artResults = db.Query(artCommand);
 
 
-                Validation.Add("Title",
-                    Validator.Required("Title is a required field."),
-                    Validator.StringLength(160, 1, "Title has more than 160 characters"));
-                Validation.Add("ArtistID",
-                    Validator.Range(0, int.MaxValue, "ArtistID is required"));
-                Validation.Add("ReleaseYear",
-                    Validator.Range(1950, Year., "Year range must be between 1950 and today"));
-                Validation.Add("ReleaseLabel",
-                    Validator.StringLength(50, 1, "Label has more than 50 characters"));
+    Validation.Add("Title",
+        Validator.Required("Title is a required field."),
+        Validator.StringLength(160, 1, "Title has more than 160 characters"));
+    Validation.Add("ArtistID",
+        Validator.Range(0, int.MaxValue, "ArtistID is required"));
+    Validation.Add("ReleaseYear",
+        Validator.Range(1950, int.MaxValue, "Year range must be between 1950 and today"));
+    Validation.Add("ReleaseLabel",
+        Validator.StringLength(50, 1, "Label has more than 50 characters"));
 
 
 
@@ -46,8 +48,8 @@
 
     if (thebutton.Equals("reset"))
     {
-        <p class="col-sm-11 text-center">Cleared by user.</p>
-        discontinued = "";
+       
+        clear = "";
     }
     else
     {
@@ -58,20 +60,13 @@
         Releaselabel = Request.Form["ReleaseLabel"];
 
 
-        //once you have obtained your data from the form controls
-        //   you can check the data against your validation controls
+        
         if (Validation.IsValid())
         {
 
-
-            //process incoming data
-            //user friendly error handling
             try
             {
-                //connect to db
-                //db = Database.Open("NWDB");
-                //create sql insert command
-                //note the number and position of placeholders for each supplied field
+            
                 var insertcommand = "INSERT INTO Albums (Title, ArtistId, ReleaseYear, ReleaseLabel) "
                             + "VALUES(@0, @1, @2, @3)";
 
@@ -87,12 +82,11 @@
                 );
 
 
-                //use of bootstrap text positioning
-                //success message
+             
                 <p class="col-sm-11 text-center">
                     <span style="color:green">
                         <strong>
-                            New product added to file.
+                            New Album added
                         </strong>
                     </span>
                 </p>
@@ -115,19 +109,17 @@
     <div class="row ">
         <div class="col-sm-5 text-right">
             <label id="Title">Title:</label><br />
-            <label id="ArtistID">ArtistID:</label><br />
+            <label id="Name">Artist:</label><br />
             <label id="ReleaseYear">Year:</label><br />
             <label id="ReleaseLabel">Label</label><br />
-            <label id="UnitPrice">Unit Price:</label><br />
         </div>
         <div class="col-sm-5">
             <!-- the title attribute creates the tooltip for the control-->
-            <input name="ProductName" id="ProductName" type="text" value="@productname"
-                   title="Product Name." />
-            @* validation messages can be place beside the actual control *@
-            @Html.ValidationMessage("ProductName")
+            <input name="Title" id="Title" type="text" value="@Title"
+                   title="Title." />
+            @Html.ValidationMessage("Title")
             <br />
-            <select id="SupplierID" name="SupplierID">
+            <select id="Name" name="Name">
                 <option value="0">select ...</option>
                 <!--  loop code here-->
                 @foreach (var supitem in supResults)

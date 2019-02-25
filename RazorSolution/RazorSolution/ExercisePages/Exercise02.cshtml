@@ -4,76 +4,57 @@
 
     var searcharg = Request.Form["searcharg"];
     var thebutton = Request.Form["formButton"];
-    var yourtextboxvalue = "";
-    var partialstring = "%" + yourtextboxvalue + "%";
+    var yourtextboxvalue = Request.Form["yourtextboxvalue"];
+
     var artistlist = Request.Form["artistlist"];
 
-    if (artistlist == null)
-    {
-        artistlist = "0";
-    }
-    var db = Database.Open("Chinook");
 
-    if (string.IsNullOrEmpty(searcharg))
-    {
-        searcharg = "0";
-    }
+    var db = Database.Open("Chinook");
+    var partialstring = "%" + yourtextboxvalue + "%";
 
     var querycommand = "SELECT ArtistID, Name "
-                    + "FROM Artists "
-                    + "WHERE Name = @0"
-                    + "ORDER BY Name";
+                 + "FROM Artists "
+                 + "WHERE Name = @0"
+                 + "ORDER BY Name";
     var ddlResults = db.Query(querycommand);
+
+
+
 
 
 }
 @section banner{
     <h1>Exercis 2: Database Query</h1>
 }
-@if (IsPost)
-{
-    if (thebutton.Equals("clear"))
-    {
-        searcharg = "";
-       
 
-    }
-    else
-    {
-    
-        if (querycommand == null)
-        {
-            <p><span style="color:blue">No data found for @searcharg</span></p>
-          
-        }
-        else
-        {
-            //a record was actually retrieved
-            //set your output fields
-            //how does one access a data field on the
-            //     results data record(s)
-            //a) via index xxxx[columnindex]
-            //b) via the column title xxxx.columntitlename
-            <p><span style="color:green">Found</span></p>
-            
-           
-        }
-    }
-}
+
 <form id="EX02" method="post">
     <div class="row">
-        <div class="col-md-4">
-            <label for="searcharg">Enter Artist Name:</label><br />
-            <input type="number" id="searcharg" name="searcharg"
-                   placeholder="Artist Name"
-                   value="@searcharg" />
-            <br />
-            <button type="submit" id="formbutton" name="formbutton"
-                    class="btn btn-primary" value="search">
-                Fetch Artist
-            </button>
-          
+        <div class="col-sm-3">
+            <label id="yourtextboxvalue">Enter Artist name: </label><br />
+            <input type="text" name="yourtextboxvalueh" value=" @yourtextboxvalue "><br /><br />
+            <button type="submit" class="btn btn-primary" name="Search" id="theSearch">Fetch Artist</button>
         </div>
+          <div class="col-sm-3">
+              @if (IsPost)
+              {
+                  if (yourtextboxvalue.IsEmpty())
+                  {
+                    <p><strong><span style="color:firebrick">Please enter an artist name (or part of name) for the search.</span></strong></p>
+                  }
+                  else
+                  {
+                      var queryProducts = db.Query(querycommand, partialstring);
+                      if (queryProducts.Count() == 0)
+                      {
+                        <p><strong><span style="color:firebrick">No artist found.</span></strong></p>
+                      }
+
+                  }
+              }
+              
+          </div>
+        
         <div class="col-md-6">
             <label for="artistlist"> Select your artist: </label><br />
             <select id="artistlist" name="artitstlist">
@@ -93,6 +74,12 @@
             </button>
         </div>
 
-      </div>
+
+        </div>
+             
+    
+      
+
+      
 </form>
 
