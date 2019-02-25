@@ -36,7 +36,9 @@
 
 
 }
-
+@section head{
+    <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
+}
 
 @section banner{
 
@@ -48,7 +50,7 @@
 
     if (thebutton.Equals("reset"))
     {
-       
+
         clear = "";
     }
     else
@@ -60,13 +62,13 @@
         Releaselabel = Request.Form["ReleaseLabel"];
 
 
-        
+
         if (Validation.IsValid())
         {
 
             try
             {
-            
+
                 var insertcommand = "INSERT INTO Albums (Title, ArtistId, ReleaseYear, ReleaseLabel) "
                             + "VALUES(@0, @1, @2, @3)";
 
@@ -82,7 +84,7 @@
                 );
 
 
-             
+
                 <p class="col-sm-11 text-center">
                     <span style="color:green">
                         <strong>

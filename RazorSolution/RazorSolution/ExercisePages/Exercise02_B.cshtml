@@ -6,7 +6,7 @@
 
     if (string.IsNullOrEmpty(artistid))
     {
-        Response.Redirect("Exercise02_B_cshtml.cshtml");
+        Response.Redirect("Exercise_02.cshtml");
     }
 
     var db = Database.Open("Chinook");
@@ -50,8 +50,8 @@
                 
                 gridinstance.Column(header: "",
                 format: @<text>
-                    <a href="~/DBPages/WebGridDestination.cshtml?pid=@item.ProductID"
-                       onclick="return confirm('Are you sure you wish to view the product details of @item.ProductName')">View</a>
+                    <a href="~/ExercisePages/Exercise2Edit.cshtml?pid=@item.ArtistID"
+                       onclick="return confirm('Are you sure you wish to view the album details of @item.Name')">View</a>
                 </text>)
                 ))
 

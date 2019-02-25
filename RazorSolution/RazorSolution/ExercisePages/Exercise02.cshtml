@@ -12,74 +12,72 @@
     var db = Database.Open("Chinook");
     var partialstring = "%" + yourtextboxvalue + "%";
 
-    var querycommand = "SELECT ArtistID, Name "
-                 + "FROM Artists "
-                 + "WHERE Name = @0"
-                 + "ORDER BY Name";
-    var ddlResults = db.Query(querycommand);
 
 
+    @if (IsPost)
+    {
+        if (yourtextboxvalue.IsEmpty())
+        {
+            <p><strong><span style="color:firebrick">Enter an artist name (or partial name) for the search.</span></strong></p>
+        }
+        else
+        {
+            var querycommand = "SELECT ArtistID, Name "
+              + "FROM Artists "
+              + "WHERE Name = @0"
+              + "ORDER BY Name";
+
+            var ddlResults = db.Query(querycommand);
+
+            if (ddlResults.Count() == 0)
+            {
+                <p><span style="color:blue">No albums found for the selected artist.</span></p>
+            }
+            else
+            {
+                Response.Redirect("Exercise02_B.cshtml?aid" + artistlist);
+            }
+
+        }
+    }
 
 
-
+}
+@section head{
+    <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
 }
 @section banner{
-    <h1>Exercis 2: Database Query</h1>
+    <h1>Exercise 2: Database Query</h1>
 }
-
 
 <form id="EX02" method="post">
     <div class="row">
-        <div class="col-sm-3">
-            <label id="yourtextboxvalue">Enter Artist name: </label><br />
-            <input type="text" name="yourtextboxvalueh" value=" @yourtextboxvalue "><br /><br />
-            <button type="submit" class="btn btn-primary" name="Search" id="theSearch">Fetch Artist</button>
-        </div>
-          <div class="col-sm-3">
-              @if (IsPost)
-              {
-                  if (yourtextboxvalue.IsEmpty())
-                  {
-                    <p><strong><span style="color:firebrick">Please enter an artist name (or part of name) for the search.</span></strong></p>
-                  }
-                  else
-                  {
-                      var queryProducts = db.Query(querycommand, partialstring);
-                      if (queryProducts.Count() == 0)
-                      {
-                        <p><strong><span style="color:firebrick">No artist found.</span></strong></p>
-                      }
+        <form id="theForm" action="" method="post">
+            <div class="col-sm-3">
+                <label id="yourtextboxvalue">Enter artist name: </label><br />
+                <input type="text" name="yourtextboxvalue" value=" @yourtextboxvalue"><br /><br />
+                <button type="submit" class="btn btn-primary" name="Search" id="theSearch">Search</button>
+            </div>
+            <div class="col-md-offset-5">
+                <label for="categorylist">Select your artist:</label><br />
 
-                  }
-              }
-              
-          </div>
-        
-        <div class="col-md-6">
-            <label for="artistlist"> Select your artist: </label><br />
-            <select id="artistlist" name="artitstlist">
-                <option value="0"> select ...</option>
-                @foreach (var artistid in ddlResults)
-                {
-                    <option value="artistitem.ArtistID">
-                        @artistid[1]
-                    </option>
-                }
+                <select id="categorylist" name="categorylist">
+                    <option value="0">select ...</option>
 
-            </select>
-            &nbsp;&nbsp;
-            <button type="submit" id="formbutton" name="formbutton"
-                    value="search" class="btn btn-primary">
-                Fetch Album
-            </button>
-        </div>
-
-
-        </div>
-             
-    
-      
-
-      
+                    @foreach (var artist in ddlResults)
+                    {
+                        <option value="@artist.ArtistID">
+                            @artist[1]
+                        </option>
+                    }
+                </select>
+                &nbsp;&nbsp;
+                <button type="submit" id="formbutton" name="formbutton"
+                        value="search" class="btn btn-primary">
+                    Search
+                </button>
+            </div>
+    </div>
 </form>
+
 

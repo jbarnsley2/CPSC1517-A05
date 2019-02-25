@@ -1,9 +1,8 @@
 ﻿@{
-    /**/
 
-
-    Layout = "~/_Layout.cshtml";
     Page.Title = "Exercise01";
+    Layout = "~/_Layout.cshtml";
+
 
 
     var CustomerName = Request.Form["CustomerName"];
@@ -18,64 +17,42 @@
 }
 @if (IsPost)
 {
-    try
+
+
+    if (thebutton.Equals("clear"))
     {
-        mealchoices = Request.Form["foodgroup"];
-        if (thebutton.Equals("clear"))
-        {
-            mealchoices = "";
-            CustomerName = null;
-            CustomerName = "";
-        }
-
-    }
-    catch 
-    {
-        mealchoices = Request.Form["foodgroup"];
-        if (string.IsNullOrEmpty(mealchoices))
-        {
-            mealchoices = "";
-      
-            <p>
-                <span style="color:firebrick">
-                    <strong>You have not made a meal selection</strong>
-                </span>
-            </p>
-        }
-
-
-
-    }
-    catch (Exception )
-    {
-
-        if (string.IsNullOrEmpty(CustomerName))
-        {
-            CustomerName = "";
-            <p>
-                <span style="color:firebrick">
-                    <strong>You have not entered a name</strong>
-                </span>
-            </p>
-        }
+        mealchoices = "";
+        CustomerName = null;
+        CustomerName = "";
     }
     else
     {
         mealchoices = Request.Form["foodgroup"];
-        < p >
-            @CustomerName, you made the following meal selections
-        < ul >
-            @foreach(var platform in mealchoices.Split(','))
-            {
-                < li > @platform </ li >
-            }
-        </ ul >
-    </ p >
+        if (string.IsNullOrEmpty(mealchoices) && string.IsNullOrEmpty(CustomerName))
+        {
+            <p>
+                <span style="color:firebrick">
+                    <strong>You did not enter a name, or make a meal selection.</strong>
+                </span>
+            </p>
+        }
+        else
+        {
+            <p>
+                @CustomerName, you made the following meal selections:
+                <ul>
+                    @foreach (var platform in mealchoices.Split(','))
+                    {
+                        <li>@platform</li>
+                    }
+                </ul>
+            </p>
+        }
+
     }
+
+
 }
-
-
-
 
 
 
@@ -85,7 +62,7 @@
 
             <span>Customer Name: </span><br />
 
-            <input type="text" id="CustomerName" name="CustomerName"
+            <input type="text" id="CustomerName" name="CustomerName" placeholder="Enter your name"
                    value="@CustomerName" />
 
         </div>
