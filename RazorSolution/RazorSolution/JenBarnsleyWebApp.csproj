@@ -115,6 +115,8 @@
     <Content Include="ExercisePages\Exercise01.cshtml" />
     <Content Include="ExercisePages\Exercise02.cshtml" />
     <Content Include="ExercisePages\Exercise02_B.cshtml" />
+    <Content Include="ExercisePages\Exercise03.cshtml" />
+    <Content Include="ExercisePages\Exercise04_A.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

@@ -1,0 +1,211 @@
+﻿@{
+                /**/
+
+
+                Layout = "~/_Layout.cshtml";
+                Page.Title = "Exercise03";
+
+                var thebutton = Request.Form["formButton"];
+
+                //variables to hold values for the Product record fields
+                var Title = "";
+                var ArtistID = "";
+                var ReleaseYear = "";
+                var Releaselabel = "";
+
+                var db = Database.Open("Chinook");
+
+                var artCommand = "Select ArtistID, Name "
+                                + "From Artists "
+                                + "Order By Name";
+                var artResults = db.Query(artCommand);
+
+
+                Validation.Add("Title",
+                    Validator.Required("Title is a required field."),
+                    Validator.StringLength(160, 1, "Title has more than 160 characters"));
+                Validation.Add("ArtistID",
+                    Validator.Range(0, int.MaxValue, "ArtistID is required"));
+                Validation.Add("ReleaseYear",
+                    Validator.Range(1950, Year., "Year range must be between 1950 and today"));
+                Validation.Add("ReleaseLabel",
+                    Validator.StringLength(50, 1, "Label has more than 50 characters"));
+
+
+
+}
+
+
+@section banner{
+
+    <h1>Exercise 3: Database Entry</h1>
+}
+
+@if (IsPost)
+{
+
+    if (thebutton.Equals("reset"))
+    {
+        <p class="col-sm-11 text-center">Cleared by user.</p>
+        discontinued = "";
+    }
+    else
+    {
+        //retrieve form input values
+        Title = Request.Form["Title"];
+        ArtistID = Request.Form["ArtistID"];
+        ReleaseYear = Request.Form["ReleaseYear"];
+        Releaselabel = Request.Form["ReleaseLabel"];
+
+
+        //once you have obtained your data from the form controls
+        //   you can check the data against your validation controls
+        if (Validation.IsValid())
+        {
+
+
+            //process incoming data
+            //user friendly error handling
+            try
+            {
+                //connect to db
+                //db = Database.Open("NWDB");
+                //create sql insert command
+                //note the number and position of placeholders for each supplied field
+                var insertcommand = "INSERT INTO Albums (Title, ArtistId, ReleaseYear, ReleaseLabel) "
+                            + "VALUES(@0, @1, @2, @3)";
+
+                //execute the insert command
+                //the method used is the .Execute(command string, list of placeholder variables)
+                //ternary operator used for nullable fields
+
+                db.Execute(insertcommand, Title,
+                ArtistID.Equals("0") ? null : ArtistID,
+                ReleaseYear.Equals("0") ? null : ReleaseYear,
+                string.IsNullOrEmpty(Releaselabel) ? null : Releaselabel,
+                0
+                );
+
+
+                //use of bootstrap text positioning
+                //success message
+                <p class="col-sm-11 text-center">
+                    <span style="color:green">
+                        <strong>
+                            New product added to file.
+                        </strong>
+                    </span>
+                </p>
+            }
+            catch (Exception ex)
+            {
+                <p class="col-sm-11 text-center">
+                    <span style="color:firebrick">
+                        <strong>
+                            @ex.Message
+                        </strong>
+                    </span>
+                </p>
+            }
+        }
+    }
+}
+@Html.ValidationSummary()
+<form id="theForm" method="post">
+    <div class="row ">
+        <div class="col-sm-5 text-right">
+            <label id="Title">Title:</label><br />
+            <label id="ArtistID">ArtistID:</label><br />
+            <label id="ReleaseYear">Year:</label><br />
+            <label id="ReleaseLabel">Label</label><br />
+            <label id="UnitPrice">Unit Price:</label><br />
+        </div>
+        <div class="col-sm-5">
+            <!-- the title attribute creates the tooltip for the control-->
+            <input name="ProductName" id="ProductName" type="text" value="@productname"
+                   title="Product Name." />
+            @* validation messages can be place beside the actual control *@
+            @Html.ValidationMessage("ProductName")
+            <br />
+            <select id="SupplierID" name="SupplierID">
+                <option value="0">select ...</option>
+                <!--  loop code here-->
+                @foreach (var supitem in supResults)
+                {
+                    //maintain the selected item in the list
+                    //   between postings
+                    if (supitem[0].ToString() == selectedsupplier)
+                    {
+                        <option value="@supitem[0]" selected>
+                            @supitem[1]
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@supitem[0]">
+                            @supitem[1]
+                        </option>
+                    }
+                }
+            </select><br />
+            <select id="CategoryID" name="CategoryID">
+                <option value="0">select ...</option>
+                <!--  loop code here-->
+                @foreach (var catitem in catResults)
+                {
+                    if (catitem[0].ToString() == selectedcategory)
+                    {
+                        <option value="@catitem[0]" selected>
+                            @catitem[1]
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@catitem[0]">
+                            @catitem[1]
+                        </option>
+                    }
+                }
+            </select><br />
+            <input name="QuantityPerUnit" id="QuantityPerUnit" type="text"
+                   value="@quantityperunit" /><br />
+            <input name="UnitPrice" id="UnitPrice" type="text"
+                   value="@unitprice" /><br />
+            <input name="UnitsInStock" id="UnitsInStock" type="text" value="@unitsinstock" title="Quantity on Hand." /><br />
+            <input name="UnitsOnOrder" id="UnitsOnOrder" type="text" value="@unitsonorder" title="Quantity on Order." /><br />
+            <input name="ReorderLevel" id="ReorderLevel" type="text" value="@reorderlevel" title="Reorder Level." /><br />
+            @*
+                     <input name="UnitPrice" id="UnitPrice" type="number" value="@unitprice"
+                       step="0.01" min="0.00" /><br />
+                <input name="UnitsInStock" id="UnitsInStock" type="number" value="@unitsinstock"
+                       step="1" min="0" title="Quantity on Hand." /><br />
+                <input name="UnitsOnOrder" id="UnitsOnOrder" type="text" value="@unitsonorder"
+                       step="1" min="0" title="Quantity on Order." /><br />
+                <input name="ReorderLevel" id="ReorderLevel" type="text" value="@reorderlevel"
+                       step="1" min="0" title="Reorder Level." /><br />
+            *@
+            <input name="Discontinued" id="Discontinued" type="checkbox"
+                   title="Product is discontinued if checked."
+                   @(string.IsNullOrEmpty(discontinued) ? "" : "checked") /><br /><br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-11 text-center">
+            <button type="submit" name="formButton" value="submit"
+                    class="btn btn-primary" style="width:90px">
+                Add
+            </button>&nbsp;&nbsp;
+            @* the attribute formnovalidate suppress validation on the
+                button activation *@
+            <button type="submit" name="formButton" value="reset"
+                    class="btn " style="width:90px"
+                    formnovalidate>
+                Clear
+            </button>
+        </div>
+    </div>
+</form>
+@section footer{
+    &copy; CPSC1517 Nait, all rights reserved
+}
+
