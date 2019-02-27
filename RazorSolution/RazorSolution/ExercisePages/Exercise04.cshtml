@@ -1,0 +1,183 @@
+﻿@{
+    Page.Title = "Edit";
+    Layout = "~/_Layout.cshtml";
+
+    var aid = Request.QueryString["aid"];
+    if (aid.IsEmpty())
+    {
+        Response.Redirect("~/ExercisePages/Exercise02B.cshtml");
+    }
+
+    var theButton = Request.Form["theButton"];
+    var artistId = Request.Form["ArtistId"];
+    var title = Request.Form["Title"];
+    var selectedArtist = Request.Form["ArtistList"];
+    var year = Request.Form["year"];
+    var label = Request.Form["Label"];
+    var albumId = Request.Form["AlbumId"];
+
+
+    var db = Database.Open("Chinook");
+
+    var artistQuery = "SELECT ArtistId, Name FROM Artists ORDER BY Name ASC";
+    var artistList = db.Query(artistQuery);
+
+    var queryStatement = "SELECT AlbumId, Title, ArtistId, ReleaseYear, ReleaseLabel FROM Albums WHERE AlbumId = @0";
+    var queryArtists = db.QuerySingle(queryStatement, aid);
+
+
+   
+    Validation.RequireField("title", "Title is required");
+    Validation.Add("title", Validator.StringLength(160, 1, "Title is limited to 160 characters"));
+
+    Validation.RequireField("year", "Year is required");
+    Validation.Add("year", Validator.Range(1950, DateTime.Now.Year, "Year is out of range, 1950 to today"));
+
+    Validation.Add("label", Validator.StringLength(50, 0, "Label is limited to 50 characters"));
+
+   
+}
+
+@section head{
+    <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
+}
+
+@section banner{
+    <h1> Edit - Update and Delete</h1>
+}
+@if (IsPost)
+{
+    //set variables
+    albumId = Request.Form["albumId"];
+    title = Request.Form["title"];
+    artistId = Request.Form["artistId"];
+    year = Request.Form["year"];
+    label = Request.Form["label"];
+
+
+    //if we get "cancel"
+    if (theButton.Equals("cancel"))
+    {
+        //set
+        albumId = "";
+        title = "";
+        artistId = "";
+        year = "";
+        label = "";
+
+        //button to go back
+        <a href="@Href("~/ExercisePages/Exercise02B.cshtml")">BACK to Records</a>
+    }
+
+    //if we get "delete"
+    else if (theButton.Equals("delete"))
+    {
+        try
+        {
+            //Delete given Album
+            var deleteCommand = "DELETE Albums WHERE AlbumId = @0";
+
+            //Assign results to integer for checks.
+            int results = db.Execute(deleteCommand, albumId);
+
+            // Check if greater than 0 records deleted are achieved.
+            if (results > 0)
+            {
+                <p><span style="color:green">Album Deleted!</span></p>
+                albumId = "";
+                title = "";
+                artistId = "";
+                year = "";
+                label = "";
+
+            }
+            else
+            {
+                <p><span style="color:firebrick">No albums called @title with an id of @albumId was found to delete.</span></p>
+            }
+
+        }
+        catch (Exception ex)
+        {
+            <p><span style="color:blue">Delete failed. @ex.Message</span></p>
+        }
+
+    }
+
+    //if we get "update"
+    else if (theButton.Equals("update"))
+    {
+        try
+        {
+            //Check for user input error
+            if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(year.ToString()) || string.IsNullOrEmpty(label))
+            {
+                <p><span style="color: firebrick">Please fill in the required fields!</span></p>
+
+                <div>
+                    @Html.ValidationSummary()
+                </div>
+            }
+            else if (Validation.IsValid())
+            {
+                //Update/Set if passes validation
+                var updateCommand = "UPDATE Albums SET "
+                    + "Title = @0, "
+                    + "ArtistId = @1, "
+                    + "ReleaseYear = @2, "
+                    + "ReleaseLabel = @3 "
+                    + "WHERE AlbumId =@4 ";
+
+                db.Execute(updateCommand, title, artistId, year, label, albumId);
+            }
+            else
+            {
+                <div>
+                    @Html.ValidationSummary()
+                </div>
+            }
+        }
+        catch (Exception ex)
+        {
+            <p><span style="color:blue"> Update failed. @ex.Message </span></p>
+        }
+    }
+}
+else
+{
+    queryArtists = db.QuerySingle(queryStatement, aid);
+
+    albumId = queryArtists.AlbumId.ToString();
+    title = queryArtists.Title;
+    artistId = queryArtists.ArtistId.ToString();
+    year = queryArtists.ReleaseYear.ToString();
+    label = queryArtists.ReleaseLabel.ToString();
+}
+
+<div>
+    <form id="theForm" action="" method="post">
+        <div class="col-sm-3">
+
+            <label id="forAlbumId">Album ID</label><br />
+            <label id="forTitle">Title</label><br />
+            <label id="forArtistId">Artist ID</label><br />
+            <label id="forYear">Year</label><br />
+            <label id="forLabel">Label</label><br />
+        </div>
+        <div class="col-sm-3 text-left">
+            <input type="text" name="AlbumId" value="@albumId" readonly /><br />
+            <input type="text" name="Title" value="@title" /><br />
+            <input type="text" name="ArtistId" value="@artistId" readonly /><br />
+            <input type="number" name="Year" value="@year" /><br />
+            <input type="text" name="Label" value="@label" /><br />
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-left">
+                <button type="submit" name="theButton" id="theUpdate" class="btn btn-primary" value="update">Update</button>&nbsp;&nbsp;&nbsp;
+                <button type="submit" name="theButton" id="theDelete" class="btn btn-primary" value="delete">Delete</button>&nbsp;&nbsp;&nbsp;
+                <button type="submit" name="theButton" id="theCancel" class="btn btn-primary" value="cancel">Cancel</button>
+            </div>
+        </div>
+    </form>
+
+</div>

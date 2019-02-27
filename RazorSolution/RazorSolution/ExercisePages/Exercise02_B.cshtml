@@ -1,29 +1,35 @@
-﻿@{ 
+﻿@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "Exercise02_B";
 
-    var artistid = Request.QueryString["aid"];
 
-    if (string.IsNullOrEmpty(artistid))
+
+    var artistID = Request.QueryString["ArtistId"];
+
+    if (string.IsNullOrEmpty(artistID))
     {
-        Response.Redirect("Exercise_02.cshtml");
+        Response.Redirect("/ExercisePages/Exercise02.cshtml");
     }
 
+   
     var db = Database.Open("Chinook");
-    var scalarcommand = "SELECT Name"
-                        + "FROM Artists"
-                        + "WHERE Artistid = @0";
-    var name = db.QueryValue(scalarcommand, artistid);
+    var scalarCommand = "Select Name from Artists where ArtistId = @0";
 
-    var querycommand = "SELECT Albumid, Title, ReleaseYear, ReleaseLabel"
-                        + "FROM Albums"
-                        + "WHERE Artistid = @0"
-                        + "ORDER BY Title";
+    
+    var artistName = db.QueryValue(scalarCommand, artistID);
 
-    var results = db.Query(querycommand, artistid);
+  
+    var queryCommand = "SELECT ArtistId, Title, ReleaseYear, ReleaseLabel FROM Albums WHERE ArtistId = @0 ORDER BY Title";
 
-    var gridinstance = new WebGrid(results, rowsPerPage: 5);
-    var gridinstance = new WebGrid(results, rowsPerPage: 5);
+    var results = db.Query(queryCommand, artistID);
+
+
+    var gridInstance = new WebGrid(results, rowsPerPage: 5);
+
+    if (results.Count() == 0)
+    {
+        <p>No records found!</p>
+    }
 
 }
 
@@ -32,29 +38,24 @@
 @section banner{
     <h1>Execise 2 : Database Query</h1>
 }
-<div class="row">
-    <div class="col-md-12">
-        <span style="font-size:x-large"><strong>Albums of @name</strong></span>
+<div>
+    <div class="row">
+        <div class="container">
+            <strong>Albums for @artistName</strong>
 
-        <!--Customize the WebGrid instance display-->
-        @gridinstance.GetHtml(
-             tableStyle: "table table-bordered table-striped table-hover",
-             mode: WebGridPagerModes.All,
-             firstText: "First",
-             lastText: "End",
-            columns: gridinstance.Columns(
-                gridinstance.Column(columnName: "AlbumID", header: "ID",
-                canSort: true),
-                gridinstance.Column(columnName: "Title", header: "Title"),
-                gridinstance.Column(columnName: "ReleaseYear", header: "Released"),
-                gridinstance.Column(columnName: "ReleaseLabel", header: "Label"),
-                
-                gridinstance.Column(header: "",
-                format: @<text>
-                    <a href="~/ExercisePages/Exercise2Edit.cshtml?pid=@item.ArtistID"
-                       onclick="return confirm('Are you sure you wish to view the album details of @item.Name')">View</a>
-                </text>)
-                ))
-
+            @gridInstance.GetHtml(tableStyle: "table table-bordered table-striped table-hover",
+         mode: WebGridPagerModes.All,
+         firstText: "Start",
+         lastText: "End",
+         columns: gridInstance.Columns(
+              gridInstance.Column(columnName: "ArtistId", header: "ID", canSort: false),
+                     gridInstance.Column(columnName: "Title", header: "Title", canSort: true),
+                     gridInstance.Column(columnName: "ReleaseYear", header: "Released", canSort: true),
+                     gridInstance.Column(columnName: "ReleaseLabel", header: "Label", canSort: false),
+                     gridInstance.Column(columnName:"", format:@<text><a href="~/ExercisePages/Exercise04.cshtml?aid=@item.ArtistId"> Edit </a></text>)
+                       )
+                     )
+        </div>
     </div>
+
 </div>

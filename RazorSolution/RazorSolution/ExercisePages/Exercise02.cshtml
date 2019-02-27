@@ -1,28 +1,41 @@
 ﻿@{
+    /**/
+
     Layout = "~/_Layout.cshtml";
     Page.Title = "Exercise02";
 
-    var thebutton = Request.Form["formButton"];
-    var yourtextboxvalue = Request.Form["yourtextboxvalue"];
+    var formButton = Request.Form["formButton"];
+    var searchArg = Request.Form["searchArg"];
+    var partialString = "%" + searchArg + "%";
+    var queryPartialCommand = "SELECT ArtistId, Name FROM Artists WHERE Name like @0 ORDER BY Name";
 
-    var artistlist = Request.Form["artistlist"];
-    if (artistlist == null)
-    {
-        artistlist = "0";
-    }
 
     var db = Database.Open("Chinook");
-    var partialstring = "%" + yourtextboxvalue + "%";
 
-    var querycommand = "SELECT ArtistID, Name "
-              + "FROM Artists "
-              + "WHERE Name = @0"
-              + "ORDER BY Name";
 
-    var ddlResults = db.Query(querycommand);
+    var queryCommandFull = "SELECT ArtistId, Name FROM Artists ORDER BY Name";
+    var queryResults = db.Query(queryCommandFull);
 
+
+    var artistList = Request.Form["artistList"];
+
+
+
+    if (searchArg.IsEmpty())
+    {
+
+        queryResults = db.Query(queryCommandFull);
+    }
+    else
+    {
+        queryResults = db.Query(queryPartialCommand, partialString);
+    }
 
 }
+
+
+
+
 
 @section head{
     <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
@@ -30,63 +43,88 @@
 @section banner{
     <h1>Exercise 2: Database Query</h1>
 }
-
-@if (IsPost)
-{
-    if (partialstring.IsEmpty())
-    {
-        <p><strong><span style="color:firebrick">Enter an artist name (or partial name).</span></strong></p>
-    }
-    else
-    {
-        var results = db.Query(querycommand, partialstring);
-        if (results.Count() = 0)
+    <div>
+        @if (IsPost)
         {
-            <p><strong><span style="color:firebrick">No Artist found.</span></strong></p>
-        }
-        else
-        {
-            Response.Redirect("Exercise02_B.cshtml?aid=" + artistlist);
-        }
-
-    }
-}
-
-
-
-<form id="EX02" method="post">
-    <div class="row">
-        <form id="theForm" action="" method="post">
-            <div class="col-sm-3">
-                <label id="yourtextboxvalue">Enter artist name: </label><br />
-                <input type="text" name="yourtextboxvalue" value=" @yourtextboxvalue"><br /><br />
-                <button type="submit" class="btn btn-primary" name="Search" id="theSearch">Fetch Artist</button>
-            </div>
-        </form>
-        <div class="col-md-5">
-            <label for=" artistlist"> Select an Artist:</label><br />
-            <select id="artistlist" name="artistlist">
-                <option value="0"> Select ...</option>
-                @foreach (var artistitem in ddlResults)
+            try
+            {
+                if (formButton.Equals("search"))
                 {
-                    <option value="@artistitem.ArtistID">
-                        @artistitem[1]
-                    </option>
+                    if (searchArg.IsEmpty())
+
+                    {
+                        <p><span style="color:firebrick">Please enter an artist (or part of a name) for the search.</span></p>
+                    }
+                    else
+                    {
+                        if (queryResults.Count() == 0)
+                        {
+                            <p><span style="color:firebrick">No artist found for the name of: @searchArg</span></p>
+                        }
+                        else
+                        {
+                            <p><span style="color:green">artist found for the name of: @searchArg</span></p>
+                        }
+
+                    }
+                }
+                else if (formButton.Equals("fetch"))
+                {
+                    if (searchArg.IsEmpty())
+
+                    {
+                        <p><span style="color:firebrick">Please enter an artist (or part of a name) for the search.</span></p>
+                    }
+                    else
+                    {
+                        Response.Redirect("Exercise02_B.cshtml?artistid=" + artistList);
+
+                    }
 
                 }
 
-            </select>
-            &nbsp;&nbsp;
-            <button type="submit" id="formbutton" name="formbutton"
-                    value="search" class="btn">
-                Fetch Album
-            </button>
+            }
+            catch (Exception ex)
+            {
+                <p><strong> @ex.Message </strong></p>
+            }
+        }
 
-        </div>
+
+        <form id="theForm" action="" method="post">
+            <div class="row">
+                <div class="col-sm-3">
+                    <label id="forSearchArg">Enter an artist name:</label> &nbsp;&nbsp;
+                    <input type="text" name="SearchArg" id="searchArgID"
+                           value="@searchArg" /><br /><br />
+
+
+                    <button type="submit" name="formButton" id="formbuttonid" class="btn btn-primary" value="search"> Fetch Artists </button>
+
+                </div>
+                <div class="col-sm-3">
+                    <label id="forArtistList">Select your artist:</label><br />
+                    <select name="artistList">
+                        <option value="0">Select...</option>
+
+                        @foreach (var item in queryResults)
+                        {
+                            <option value="@item.ArtistId">@item.Name</option>
+                        }
+
+                    </select><br /><br />
+
+                    <button type="submit" name="formButton" id="formbuttonid" class="btn btn-primary" value="fetch"> Fetch Albums </button>
+                    &nbsp;&nbsp;
+
+
+                </div>
+
+
+            </div>
+
+
+        </form>
 
 
     </div>
-
-</form>
-
-

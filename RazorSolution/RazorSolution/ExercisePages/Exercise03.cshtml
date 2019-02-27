@@ -7,12 +7,13 @@
 
     var thebutton = Request.Form["formButton"];
 
-    //variables to hold values for the Product record fields
+   
     var Title = "";
     var Name = "";
     var ReleaseYear = "";
     var Releaselabel = "";
     var clear = "";
+  
 
     var db = Database.Open("Chinook");
 
@@ -28,7 +29,7 @@
     Validation.Add("Name",
         Validator.Range(0, int.MaxValue, "Artist name is required"));
     Validation.Add("ReleaseYear",
-        Validator.Range(1950, int.MaxValue, "Year range must be between 1950 and today"));
+        Validator.Range(1950, DateTime.Now.Year, "Year range must be between 1950 and today"));
     Validation.Add("ReleaseLabel",
         Validator.StringLength(50, 1, "Label has more than 50 characters"));
 
