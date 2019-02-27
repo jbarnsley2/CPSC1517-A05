@@ -2,47 +2,28 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = "Exercise02";
 
-    var searcharg = Request.Form["searcharg"];
     var thebutton = Request.Form["formButton"];
     var yourtextboxvalue = Request.Form["yourtextboxvalue"];
 
     var artistlist = Request.Form["artistlist"];
-
+    if (artistlist == null)
+    {
+        artistlist = "0";
+    }
 
     var db = Database.Open("Chinook");
     var partialstring = "%" + yourtextboxvalue + "%";
 
-
-
-    @if (IsPost)
-    {
-        if (yourtextboxvalue.IsEmpty())
-        {
-            <p><strong><span style="color:firebrick">Enter an artist name (or partial name) for the search.</span></strong></p>
-        }
-        else
-        {
-            var querycommand = "SELECT ArtistID, Name "
+    var querycommand = "SELECT ArtistID, Name "
               + "FROM Artists "
               + "WHERE Name = @0"
               + "ORDER BY Name";
 
-            var ddlResults = db.Query(querycommand);
-
-            if (ddlResults.Count() == 0)
-            {
-                <p><span style="color:blue">No albums found for the selected artist.</span></p>
-            }
-            else
-            {
-                Response.Redirect("Exercise02_B.cshtml?aid" + artistlist);
-            }
-
-        }
-    }
+    var ddlResults = db.Query(querycommand);
 
 
 }
+
 @section head{
     <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
 }
@@ -50,34 +31,62 @@
     <h1>Exercise 2: Database Query</h1>
 }
 
+@if (IsPost)
+{
+    if (partialstring.IsEmpty())
+    {
+        <p><strong><span style="color:firebrick">Enter an artist name (or partial name).</span></strong></p>
+    }
+    else
+    {
+        var results = db.Query(querycommand, partialstring);
+        if (results.Count() = 0)
+        {
+            <p><strong><span style="color:firebrick">No Artist found.</span></strong></p>
+        }
+        else
+        {
+            Response.Redirect("Exercise02_B.cshtml?aid=" + artistlist);
+        }
+
+    }
+}
+
+
+
 <form id="EX02" method="post">
     <div class="row">
         <form id="theForm" action="" method="post">
             <div class="col-sm-3">
                 <label id="yourtextboxvalue">Enter artist name: </label><br />
                 <input type="text" name="yourtextboxvalue" value=" @yourtextboxvalue"><br /><br />
-                <button type="submit" class="btn btn-primary" name="Search" id="theSearch">Search</button>
+                <button type="submit" class="btn btn-primary" name="Search" id="theSearch">Fetch Artist</button>
             </div>
-            <div class="col-md-offset-5">
-                <label for="categorylist">Select your artist:</label><br />
+        </form>
+        <div class="col-md-5">
+            <label for=" artistlist"> Select an Artist:</label><br />
+            <select id="artistlist" name="artistlist">
+                <option value="0"> Select ...</option>
+                @foreach (var artistitem in ddlResults)
+                {
+                    <option value="@artistitem.ArtistID">
+                        @artistitem[1]
+                    </option>
 
-                <select id="categorylist" name="categorylist">
-                    <option value="0">select ...</option>
+                }
 
-                    @foreach (var artist in ddlResults)
-                    {
-                        <option value="@artist.ArtistID">
-                            @artist[1]
-                        </option>
-                    }
-                </select>
-                &nbsp;&nbsp;
-                <button type="submit" id="formbutton" name="formbutton"
-                        value="search" class="btn btn-primary">
-                    Search
-                </button>
-            </div>
+            </select>
+            &nbsp;&nbsp;
+            <button type="submit" id="formbutton" name="formbutton"
+                    value="search" class="btn">
+                Fetch Album
+            </button>
+
+        </div>
+
+
     </div>
+
 </form>
 
 

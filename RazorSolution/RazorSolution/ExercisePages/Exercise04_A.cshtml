@@ -1,9 +1,39 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+﻿@{
+    Page.Title = "Edit";
+    Layout = "~/_Layout.cshtml";
 
-</body>
-</html>
+
+    var aid = ["aid"];
+    if (aid.IsEmpty())
+    {
+        Response.Redirect("Exercise02.cshtml");
+    }
+
+    var artistid = Request.Form["ArtistID"];
+    var Name = Request.Form["Name"];
+    var Title = Request.Form["Title"];
+    var AlbumID = Request.Form["AlbumID"];
+    var ReleaseYear = Request.Form["ReleaseYear"];
+
+    var thebutton = Request.Form["theButton"];
+
+    if(IsPost)
+    {
+        artistid = aid;
+    }
+    var db = Database.Open("Chinook");
+    var albumStatement = "Select AlbumID, Title, ArtistID, ReleaseYear, ReleaseLabel"
+                        + "From Albums"
+                        + "Where AlbumID = @0";
+    var queryAlbums = db.Query(albumStatement);
+   
+
+}
+
+@section head{
+    <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
+}
+
+@section banner{
+    <h1> Edit - Update and Delete</h1>
+}
