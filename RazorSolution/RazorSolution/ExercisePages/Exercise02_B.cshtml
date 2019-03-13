@@ -38,24 +38,27 @@
 @section banner{
     <h1>Execise 2 : Database Query</h1>
 }
+
 <div>
     <div class="row">
+      
         <div class="container">
             <strong>Albums for @artistName</strong>
 
             @gridInstance.GetHtml(tableStyle: "table table-bordered table-striped table-hover",
-         mode: WebGridPagerModes.All,
-         firstText: "Start",
-         lastText: "End",
-         columns: gridInstance.Columns(
-              gridInstance.Column(columnName: "ArtistId", header: "ID", canSort: false),
-                     gridInstance.Column(columnName: "Title", header: "Title", canSort: true),
-                     gridInstance.Column(columnName: "ReleaseYear", header: "Released", canSort: true),
-                     gridInstance.Column(columnName: "ReleaseLabel", header: "Label", canSort: false),
-                     gridInstance.Column(columnName:"", format:@<text><a href="~/ExercisePages/Exercise04.cshtml?aid=@item.ArtistId"> Edit </a></text>)
-                       )
-                     )
+                   mode: WebGridPagerModes.All,
+                   firstText: "Start",
+                   lastText: "End",
+                   columns: gridInstance.Columns(
+                        gridInstance.Column(columnName: "ArtistId", header: "ID", canSort: false),
+                               gridInstance.Column(columnName: "Title", header: "Title", canSort: true),
+                               gridInstance.Column(columnName: "ReleaseYear", header: "Released", canSort: true),
+                               gridInstance.Column(columnName: "ReleaseLabel", header: "Label", canSort: false),
+                               gridInstance.Column(columnName: "", format:@<text><a href="~/ExercisePages/Exercise04.cshtml?aid=@item.ArtistId"> Edit </a></text>)
+                                 )
+                               )
         </div>
+        
     </div>
-
+        
 </div>

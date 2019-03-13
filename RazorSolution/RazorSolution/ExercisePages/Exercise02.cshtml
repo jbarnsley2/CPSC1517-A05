@@ -5,8 +5,8 @@
     Page.Title = "Exercise02";
 
     var formButton = Request.Form["formButton"];
-    var searchArg = Request.Form["searchArg"];
-    var partialString = "%" + searchArg + "%";
+    var yourtextvalue = Request.Form["searchArg"];
+    var partialString = "%" + yourtextvalue + "%";
     var queryPartialCommand = "SELECT ArtistId, Name FROM Artists WHERE Name like @0 ORDER BY Name";
 
 
@@ -21,7 +21,7 @@
 
 
 
-    if (searchArg.IsEmpty())
+    if (yourtextvalue.IsEmpty())
     {
 
         queryResults = db.Query(queryCommandFull);
@@ -50,7 +50,7 @@
             {
                 if (formButton.Equals("search"))
                 {
-                    if (searchArg.IsEmpty())
+                    if (yourtextvalue.IsEmpty())
 
                     {
                         <p><span style="color:firebrick">Please enter an artist (or part of a name) for the search.</span></p>
@@ -59,18 +59,18 @@
                     {
                         if (queryResults.Count() == 0)
                         {
-                            <p><span style="color:firebrick">No artist found for the name of: @searchArg</span></p>
+                            <p><span style="color:firebrick">No artist found for the name of @yourtextvalue</span></p>
                         }
                         else
                         {
-                            <p><span style="color:green">artist found for the name of: @searchArg</span></p>
+                            <p><span style="color:green">artist found for the name of @yourtextvalue</span></p>
                         }
 
                     }
                 }
                 else if (formButton.Equals("fetch"))
                 {
-                    if (searchArg.IsEmpty())
+                    if (yourtextvalue.IsEmpty())
 
                     {
                         <p><span style="color:firebrick">Please enter an artist (or part of a name) for the search.</span></p>
@@ -96,7 +96,7 @@
                 <div class="col-sm-3">
                     <label id="forSearchArg">Enter an artist name:</label> &nbsp;&nbsp;
                     <input type="text" name="SearchArg" id="searchArgID"
-                           value="@searchArg" /><br /><br />
+                           value="@yourtextvalue" /><br /><br />
 
 
                     <button type="submit" name="formButton" id="formbuttonid" class="btn btn-primary" value="search"> Fetch Artists </button>
