@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BigFootWebApp
+namespace FSISSystem.JBarnsley
 {
     public class Class1
     {
