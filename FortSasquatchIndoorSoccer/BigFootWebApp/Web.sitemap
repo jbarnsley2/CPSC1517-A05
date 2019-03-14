@@ -9,11 +9,9 @@
          a) create a pair of siteMapNode tags, open and close
          b) place your sub menu siteMapNodes between the open 
               and close tags of (a)-->
-    <siteMapNode url="" title="Sample Pages" description="">
-      <siteMapNode url="~/SamplePages/HelloWorld.aspx" title="Hello World"  description="" />
-      <siteMapNode url="~/SamplePages/BasicControls.aspx" title="Basic Controls"  description="" />
-      <siteMapNode url="~/SamplePages/JobApplication.aspx" title="Formatting/GridView"  description="" />
-      <siteMapNode url="~/SamplePages/ContestEntry.aspx" title="Validation"  description="" />
+    <siteMapNode url="" title="Exercise Pages" description="">
+      <siteMapNode url="~/ExercisePages/WebForm.aspx" title="WebForm"  description="" />
+     
     </siteMapNode>
   </siteMapNode>
 </siteMap>
