@@ -1,6 +1,8 @@
 ﻿using System;
 
 #region
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 #endregion
 
 namespace FSISSystem.JBarnsley.Data
@@ -15,7 +17,7 @@ namespace FSISSystem.JBarnsley.Data
         public string _EmergencyPhoneNumber;
         public string _EmailAddress;
         [NotMapped]
-        public string GuardianName { get { return LastName + "," + FirstName; } }
+        public string FullName { get { return LastName + "," + FirstName; } }
 
         public string EmergencyPhoneNumber
         {
