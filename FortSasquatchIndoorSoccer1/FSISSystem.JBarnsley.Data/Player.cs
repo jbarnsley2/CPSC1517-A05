@@ -15,12 +15,13 @@ namespace FSISSystem.JBarnsley.Data
     [Table("Player", Schema = "dbo")]
     public class Player
     {
-        public int? GuardianID { get; set; }
+       
 
         [Key]
         public int PlayerID { get; set; }
 
-        public int? TeamID { get; set; }
+        public int TeamID { get; set; }
+        public int GuardianID { get; set; }
 
         public string FirstName { get; set; }
 

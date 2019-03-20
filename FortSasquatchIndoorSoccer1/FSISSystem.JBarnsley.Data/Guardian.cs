@@ -16,14 +16,14 @@ namespace FSISSystem.JBarnsley.Data
         [Table("Guardian", Schema = "dbo")]
         public class Guardian
         {
-            [Key]
+        private string _EmergencyPhoneNumber;
+        private string _EmailAddress;
+        [Key]
             public int GuardianID { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
-            private string _EmergencyPhoneNumber;
-            private string _EmailAddress;
-            [NotMapped]
-            public string FullName { get { return LastName + "," + FirstName; } }
+            
+           
 
             public string EmergencyPhoneNumber
             {
@@ -64,7 +64,8 @@ namespace FSISSystem.JBarnsley.Data
                 }
             }
 
-
-        }
+        [NotMapped]
+        public string FullName { get { return LastName + "," + FirstName; } }
+    }
     }
 
