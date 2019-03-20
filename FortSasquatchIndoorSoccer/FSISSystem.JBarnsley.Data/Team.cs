@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
-#region
+#region Additional Namespaces
+
 #endregion
 
 namespace FSISSystem.JBarnsley.Data
@@ -14,8 +15,9 @@ namespace FSISSystem.JBarnsley.Data
         public int TeamID { get; set; }
         public string TeamName { get; set; }
         public string Coach { get; set; }
+        public string AssistantCoach { get; set; }
         public int? Wins { get; set; }
         public int? Losses { get; set; }
-        public string AssistantCoach { get; set; }
+        
     }
 }

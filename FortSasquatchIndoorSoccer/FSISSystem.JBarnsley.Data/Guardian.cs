@@ -1,6 +1,6 @@
 ﻿using System;
 
-#region
+#region Additional NameSpaces
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 #endregion
@@ -10,12 +10,15 @@ namespace FSISSystem.JBarnsley.Data
     [Table("Guardian", Schema = "dbo")]
     public class Guardian
     {
+
+       
+
         [Key]
         public int GuardianID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string _EmergencyPhoneNumber;
-        public string _EmailAddress;
+        private string _EmergencyPhoneNumber;
+        private string _EmailAddress;
         [NotMapped]
         public string FullName { get { return LastName + "," + FirstName; } }
 
