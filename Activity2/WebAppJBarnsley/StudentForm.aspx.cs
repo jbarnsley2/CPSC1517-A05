@@ -21,14 +21,14 @@ namespace WebAppJBarnsley
 
         protected void Submit_Click(object sender, EventArgs e)
         {
-            string studentID = StudentID.Text;
+            int studentID = int.Parse(StudentID.Text);
             string studentName = StudentName.Text;
-            string credits = Credits.Text;
-            string emerPhoneNumber = EmerPhoneNumber.Text;
+            double credits = double.Parse(Credits.Text);
+            string emergencyPhoneNumber = EmergencyPhoneNumber.Text;
             
 
             StudentList.Add(new Student(studentID, studentName,
-                credits, emerPhoneNumber));
+                credits, emergencyPhoneNumber));
 
             StudentFormList.DataSource = StudentList;
             StudentFormList.DataBind();
