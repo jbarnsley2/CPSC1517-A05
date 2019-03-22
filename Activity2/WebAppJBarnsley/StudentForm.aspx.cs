@@ -9,45 +9,41 @@ namespace WebAppJBarnsley
 {
     public partial class StudentForm : System.Web.UI.Page
     {
-        public static List<StudentData> StudentList;
+        public static List<Student> StudentList;
         protected void Page_Load(object sender, EventArgs e)
         {
             Message.Text = "";
             if (!Page.IsPostBack)
             {
-                StudentList = new List<StudentData>();
+                StudentList = new List<Student>();
             }
         }
 
         protected void Submit_Click(object sender, EventArgs e)
         {
-            int studentID = StudentID.;
-            string emailaddress = EmailAddress.Text;
-            string phonenumber = PhoneNumber.Text;
-            string fullorparttime = FullOrPartTime.SelectedValue;
+            string studentID = StudentID.Text;
+            string studentName = StudentName.Text;
+            string credits = Credits.Text;
+            string emerPhoneNumber = EmerPhoneNumber.Text;
+            
 
-            gvCollection.Add(new GridViewData(fullname, emailaddress,
-                phonenumber, fullorparttime, jobs));
+            StudentList.Add(new Student(studentID, studentName,
+                credits, emerPhoneNumber));
 
-            JobApplicantList.DataSource = gvCollection;
-            JobApplicantList.DataBind();
+            StudentFormList.DataSource = StudentList;
+            StudentFormList.DataBind();
         }
     }
 
         protected void Clear_Click(object sender, EventArgs e)
         {
-            FirstName.Text = "";
-            LastName.Text = "";
-            StreetAddress1.Text = "";
-            StreetAddress2.Text = "";
-            City.Text = "";
-            PostalCode.Text = "";
-            EmailAddress.Text = "";
-            Province.ClearSelection();
-            Terms.Checked = false;
-            CheckAnswer.Text = "";
+            StudentID.Text = "";
+            StudentName.Text = "";
+            Credits.Text = "";
+            EmerPhoneNumber.Text = "";
+         
         }
-    }
+    
 
 
 }
