@@ -148,6 +148,8 @@
     <Content Include="Content\bootwrap-freecode.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
+    <Content Include="ExercisePages\ExercisePage.aspx" />
+    <Content Include="ExercisePages\Gridview.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -224,6 +226,20 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ExercisePages\ExercisePage.aspx.cs">
+      <DependentUpon>ExercisePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExercisePages\ExercisePage.aspx.designer.cs">
+      <DependentUpon>ExercisePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExercisePages\Gridview.aspx.cs">
+      <DependentUpon>Gridview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExercisePages\Gridview.aspx.designer.cs">
+      <DependentUpon>Gridview.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -252,7 +268,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ExercisePages\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
