@@ -29,7 +29,7 @@ namespace BigFootWebApp.ExercisePages
         {
             try
             {
-                TeamControl sysmgr = new TeamControl();
+                TeamController sysmgr = new TeamController();
                 List<Team> info = sysmgr.Team_List();
                 info.Sort((x, y) => x.TeamName.CompareTo(y.TeamName));
                 TeamList.DataSource = info;
@@ -54,8 +54,8 @@ namespace BigFootWebApp.ExercisePages
             {
                 try
                 {
-                    PlayerControl sysmgrP = new PlayerControl();
-                    TeamControl sysmgrT = new TeamControl();
+                    PlayerController sysmgrP = new PlayerController();
+                    TeamController sysmgrT = new TeamController();
                     List<Player> infoP = sysmgrP.Player_FindByTeamID(TeamList.SelectedValue);
                     Team infoT = sysmgrT.Team_Find(int.Parse(TeamList.SelectedValue));
                     infoP.Sort((x, y) => x.FullName.CompareTo(y.FullName));

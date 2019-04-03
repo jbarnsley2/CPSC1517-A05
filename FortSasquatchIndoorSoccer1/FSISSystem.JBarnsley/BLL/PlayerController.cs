@@ -10,12 +10,13 @@ using System.Threading.Tasks;
 using FSISSystem.JBarnsley.Data;
 using FSISSystem.JBarnsley.DAL;
 using System.Data.SqlClient;
+using System.Data.Entity.Infrastructure;
 #endregion
 
 namespace FSISSystem.JBarnsley.BLL
 {
    
-        public class PlayerControl
+        public class PlayerController
         {
             public List<Player> Player_List()
             {
@@ -41,7 +42,35 @@ namespace FSISSystem.JBarnsley.BLL
                 return results.ToList();
             }
         }
-        
+
+        public int Player_Add(Player info)
+        {
+            using (var context = new FSISContext())
+            {
+                Player addedItem = context.Players.Add(info);
+                context.SaveChanges();
+                return addedItem.PlayerID;
+            }
+
+        }
+        public void Player_Update(Player info)
+        {
+            using (var context = new FSISContext())
+            {
+                DbEntityEntry<Player> existing = context.Entry(info);
+                existing.State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+        public int Player_Delete(int playerID)
+        {
+            using (var context = new FSISContext())
+            {
+                var exsisting = context.Players.Find(playerID);
+                context.Players.Remove(exsisting);
+                return context.SaveChanges();
+            }
+        }
 
     }
 }

@@ -14,7 +14,7 @@ using FSISSystem.JBarnsley.DAL;
 namespace FSISSystem.JBarnsley.BLL
 {
     
-        public class GuardianControl
+        public class GuardianController
         {
             public List<Guardian> Guardian_List()
             {

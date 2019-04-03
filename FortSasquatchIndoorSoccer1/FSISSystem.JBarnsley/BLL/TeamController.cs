@@ -13,7 +13,7 @@ using FSISSystem.JBarnsley.DAL;
 
 namespace FSISSystem.JBarnsley.BLL
 {
-    public class TeamControl
+    public class TeamController
     {
         public List<Team> Team_List()
         {
