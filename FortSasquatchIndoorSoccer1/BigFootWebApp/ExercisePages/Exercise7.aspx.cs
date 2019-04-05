@@ -9,6 +9,8 @@ using System.Web.UI.WebControls;
 using FSISSystem.JBarnsley.BLL;
 using System.Data.Entity.Validation;
 using FSISSystem.JBarnsley.Data;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Core;
 #endregion
 
 namespace BigFootWebApp.ExercisePages
@@ -197,17 +199,49 @@ namespace BigFootWebApp.ExercisePages
 
         protected void Add_Click(object sender, EventArgs e)
         {
-            if (IsValid)
+            //if (Page.IsValid)
+            // {
+            if (TeamList.SelectedIndex == 0)
+            {
+                errormsgs.Add("Please select a Team");
+            }
+            if (GuardianList.SelectedIndex == 0)
+            {
+                errormsgs.Add("Please select a Guardian");
+            }
+            if (errormsgs.Count() > 0)
+            {
+                LoadMessageDisplay(errormsgs, "alert alert-info");
+            }
+            else
             {
                 try
                 {
-                    Player info = BuildPlayerFromUserInput();
+                    //Player info = BuildPlayerFromUserInput();
+                    Player info = new Player();
+
                     var controller = new PlayerController();
                     int NewPlayerID = controller.Player_Add(info);
                     BindPlayerList();
                     PlayerID.Text = NewPlayerID.ToString();
-                    errormsgs.Add("Player Added");
+                    errormsgs.Add($"{info.FullName} was successfully added");
                     LoadMessageDisplay(errormsgs, "alert alert-success");
+                    if
+                }
+
+
+                catch (DbUpdateException ex)
+                {
+                    UpdateException updateException = (UpdateException)ex.InnerException;
+                    if (updateException.InnerException != null)
+                    {
+                        updateException.InnerException.Message.ToString();
+                    }
+                    else
+                    {
+                        errormsgs.Add(updateException.Message);
+
+                    }
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -221,11 +255,11 @@ namespace BigFootWebApp.ExercisePages
                     LoadMessageDisplay(errormsgs, "alert alert-danger");
                 }
 
-            }
-            else
-            {
-                errormsgs.Add("Please fix the errors on the form");
-                LoadMessageDisplay(errormsgs, "alert alert-info");
+                catch (Exception ex)
+                {
+                    errormsgs.Add(GetInnerException(ex).ToString());
+                    LoadMessageDisplay(errormsgs, "alert alert-danger");
+                }
             }
         }
 
