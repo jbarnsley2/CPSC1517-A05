@@ -24,10 +24,13 @@ namespace FSISSystem.JBarnsley.Data
         public int GuardianID { get; set; }
 
         public string FirstName { get; set; }
+        [Required(ErrorMessage ="First Name is required.")]
 
         public string LastName { get; set; }
+        [Required(ErrorMessage ="Last Name is required.")]
 
         public int Age { get; set; }
+        [Range (6,int.MaxValue,14, ErrorMessage ="Age range must be betweeb 6 -14"]
 
         private string _Gender;
 

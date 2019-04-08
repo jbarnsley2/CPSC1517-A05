@@ -217,16 +217,17 @@ namespace BigFootWebApp.ExercisePages
             {
                 try
                 {
-                    //Player info = BuildPlayerFromUserInput();
-                    Player info = new Player();
-
+                    Player info = BuildPlayerFromUserInput();
+                    
                     var controller = new PlayerController();
                     int NewPlayerID = controller.Player_Add(info);
                     BindPlayerList();
                     PlayerID.Text = NewPlayerID.ToString();
                     errormsgs.Add($"{info.FullName} was successfully added");
                     LoadMessageDisplay(errormsgs, "alert alert-success");
-                    if
+                   
+                
+                
                 }
 
 
@@ -257,7 +258,7 @@ namespace BigFootWebApp.ExercisePages
 
                 catch (Exception ex)
                 {
-                    errormsgs.Add(GetInnerException(ex).ToString());
+                    errormsgs.Add("Please add player details");
                     LoadMessageDisplay(errormsgs, "alert alert-danger");
                 }
             }
@@ -294,7 +295,7 @@ namespace BigFootWebApp.ExercisePages
             }
             else
             {
-                errormsgs.Add("Please look up a player before attempting to update");
+                errormsgs.Add("Please select a player before attempting to update");
                 LoadMessageDisplay(errormsgs, "alert alert-info");
             }
 
