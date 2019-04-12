@@ -256,7 +256,7 @@ namespace BigFootWebApp.ExercisePages
                     LoadMessageDisplay(errormsgs, "alert alert-danger");
                 }
 
-                catch (Exception ex)
+                catch (Exception )
                 {
                     errormsgs.Add("Please add player details");
                     LoadMessageDisplay(errormsgs, "alert alert-danger");

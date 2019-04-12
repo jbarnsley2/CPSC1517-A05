@@ -30,7 +30,7 @@ namespace FSISSystem.JBarnsley.Data
         [Required(ErrorMessage ="Last Name is required.")]
 
         public int Age { get; set; }
-        [Range (6,int.MaxValue,14, ErrorMessage ="Age range must be betweeb 6 -14"]
+      
 
         private string _Gender;
 
