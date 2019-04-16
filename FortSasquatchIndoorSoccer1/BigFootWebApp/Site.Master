@@ -48,10 +48,24 @@
                     </button>
                     <a class="navbar-brand" runat="server" href="~/">Jen Barnsley</a>
                 </div>
+               
+                   <%-- <asp:Menu ID="BasicMenu" runat="server" DataSourceID="SiteNav"
+                        Orientation="Horizontal"
+                        StaticDisplayLevels="1"
+                        StaticMenuStyle-CssClass="nav navbar-nav"
+                        StaticSelectedStyle-CssClass="active"
+                        DynamicMenuStyle-CssClass="dropdown-menu"
+                        IncludeStyleBlock="false"></asp:Menu>
+                    <asp:SiteMapDataSource ID="SiteNav" runat="server" ShowStartingNode="false" />--%>
+                    
+              
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/ExercisePages">Exercise Pages</a></li>
+                        <li><a runat="server" href="~/Contact">Contact</a></li>
+                        <li><a runat="server" href="~/About">About</a></li>
+                        <li><a runat="server" href="~/ExercisePages/Exercise7">Exercise7B</a></li>
+                         <li><a runat="server" href="~/ExercisePages/Gridview">GridView</a></li>
                     </ul>
                 </div>
             </div>

@@ -24,10 +24,13 @@ namespace FSISSystem.JBarnsley.Data
         public int GuardianID { get; set; }
 
         public string FirstName { get; set; }
+        [Required(ErrorMessage ="First Name is required.")]
 
         public string LastName { get; set; }
+        [Required(ErrorMessage ="Last Name is required.")]
 
         public int Age { get; set; }
+      
 
         private string _Gender;
 
@@ -35,7 +38,7 @@ namespace FSISSystem.JBarnsley.Data
 
         private string _MedicalAlertDetails;
 
-        public string FullName { get { return LastName + "," + FirstName; } }
+        public string FullName { get { return LastName + ", " + FirstName; } }
 
         public string Gender
         {
