@@ -13,7 +13,7 @@
         <asp:LinkButton ID="Clear" runat="server" Font-Size="X-Large" OnClick="Clear_Click">Clear</asp:LinkButton>&nbsp;&nbsp;
         <asp:LinkButton ID="Add" runat="server" Font-Size="X-Large" OnClick="Add_Click">Add</asp:LinkButton>&nbsp;&nbsp;
         <asp:LinkButton ID="Update" runat="server" Font-Size="X-Large" OnClick="Update_Click">Update</asp:LinkButton>&nbsp;&nbsp;
-        <asp:LinkButton ID="Delete" runat="server" Font-Size="X-Large" OnClick="Delete_Click">Delete</asp:LinkButton>
+        <asp:LinkButton ID="Delete" runat="server" Font-Size="X-Large" OnClick="Delete_Click" CausesValidation="false" OnClientClick="return confirm('Are you sure you wish to delete this player?')>Delete</asp:LinkButton>
 
         <br />
         <br />
