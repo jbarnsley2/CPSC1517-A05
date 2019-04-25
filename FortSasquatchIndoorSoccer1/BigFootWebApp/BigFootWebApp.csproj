@@ -172,6 +172,7 @@
     <Content Include="Content\bootwrap-freecode.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
+    <Content Include="ExercisePages\Exercise11.aspx" />
     <Content Include="ExercisePages\Exercise7.aspx" />
     <Content Include="ExercisePages\Gridview.aspx" />
     <Content Include="favicon.ico" />
@@ -249,6 +250,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExercisePages\Exercise11.aspx.cs">
+      <DependentUpon>Exercise11.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExercisePages\Exercise11.aspx.designer.cs">
+      <DependentUpon>Exercise11.aspx</DependentUpon>
     </Compile>
     <Compile Include="ExercisePages\Exercise7.aspx.cs">
       <DependentUpon>Exercise7.aspx</DependentUpon>

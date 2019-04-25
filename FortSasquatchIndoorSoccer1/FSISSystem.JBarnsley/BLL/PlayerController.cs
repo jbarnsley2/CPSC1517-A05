@@ -11,6 +11,7 @@ using FSISSystem.JBarnsley.Data;
 using FSISSystem.JBarnsley.DAL;
 using System.Data.SqlClient;
 using System.Data.Entity.Infrastructure;
+using System.ComponentModel;
 #endregion
 
 namespace FSISSystem.JBarnsley.BLL
@@ -69,6 +70,18 @@ namespace FSISSystem.JBarnsley.BLL
                 var exsisting = context.Players.Find(playerID);
                 context.Players.Remove(exsisting);
                 return context.SaveChanges();
+            }
+        }
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<Player> Player_GetByAgeGender(int age, string gender)
+        {
+            using (var context = new FSISContext())
+            {
+                IEnumerable<Player> results = 
+                    context.Database.SqlQuery<Player>("Player_GetByAgeGender @Age, @Gender",
+                     new SqlParameter("Age", age),
+                                    new SqlParameter("Gender", gender));
+                return results.ToList();
             }
         }
 

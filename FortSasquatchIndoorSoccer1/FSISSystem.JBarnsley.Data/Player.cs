@@ -23,18 +23,22 @@ namespace FSISSystem.JBarnsley.Data
         public int TeamID { get; set; }
         public int GuardianID { get; set; }
 
+        [Required(ErrorMessage = "First Name is required")]
         public string FirstName { get; set; }
-        [Required(ErrorMessage ="First Name is required.")]
 
+        [Required(ErrorMessage = "Last Name is required.")]
         public string LastName { get; set; }
-        [Required(ErrorMessage ="Last Name is required.")]
+       
 
+        [Required(ErrorMessage = "Age is required")]
+        [Range(6, 14, ErrorMessage = "Age must between 6 and 14")]
         public int Age { get; set; }
-      
 
         private string _Gender;
 
         public string AlbertaHealthCareNumber { get; set; }
+        [Required(ErrorMessage = "Alberta Health care number is required")]
+        [RegularExpression(@"^[1-9]{1}\d{9}", ErrorMessage = "Must be 10 digits with first digit starts with 1-9")]
 
         private string _MedicalAlertDetails;
 
