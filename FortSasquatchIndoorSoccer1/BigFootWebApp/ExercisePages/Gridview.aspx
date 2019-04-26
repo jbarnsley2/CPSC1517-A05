@@ -6,6 +6,11 @@
             <asp:Label ID="Label1" runat="server" Text="Teams"></asp:Label>
              <asp:DropDownList ID="TeamList" runat="server"></asp:DropDownList>
             <asp:LinkButton ID="Search" runat="server" OnClick="Search_Click"> Search</asp:LinkButton><br />
+            <asp:DataList ID="Message" runat="server" Enabled="False">
+        <ItemTemplate>
+            <%# Container.DataItem %>
+        </ItemTemplate>
+    </asp:DataList>
             <br />
             <br />
             <asp:Label ID="Label2" runat="server" Text="Coach: " AssociatedControlID="Coach"></asp:Label>
@@ -47,10 +52,12 @@
                     </asp:TemplateField>
                 </Columns>
                    <EmptyDataTemplate>
-                    No data avaliable at this time
+                    Please select a player. <br />
+                       No data available
                 </EmptyDataTemplate>
                    </asp:GridView>
             <asp:Label ID="ErrorMsg" runat="server" Text=""></asp:Label>
+            
         </fieldset>
     </div>
     <script src="../Scripts/bootwrap-freecode.js"></script>

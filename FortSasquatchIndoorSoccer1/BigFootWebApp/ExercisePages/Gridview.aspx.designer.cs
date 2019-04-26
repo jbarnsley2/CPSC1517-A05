@@ -40,6 +40,15 @@ namespace BigFootWebApp.ExercisePages {
         protected global::System.Web.UI.WebControls.LinkButton Search;
         
         /// <summary>
+        /// Message control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataList Message;
+        
+        /// <summary>
         /// Label2 control.
         /// </summary>
         /// <remarks>

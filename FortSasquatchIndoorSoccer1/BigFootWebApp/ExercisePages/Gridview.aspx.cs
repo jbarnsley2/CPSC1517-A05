@@ -16,12 +16,20 @@ namespace BigFootWebApp.ExercisePages
 {
     public partial class Gridview : System.Web.UI.Page
     {
+        List<string> errormsgs = new List<string>();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
                 BindTeamList();
             }
+        }
+        protected void LoadMessageDisplay(List<string> errormsglist, string cssclass)
+        {
+            Message.CssClass = cssclass;
+            Message.DataSource = errormsglist;
+            Message.DataBind();
         }
 
 
@@ -47,6 +55,8 @@ namespace BigFootWebApp.ExercisePages
         {
             if (TeamList.SelectedIndex == 0)
             {
+                errormsgs.Add(" Please select a Player.");
+                LoadMessageDisplay(errormsgs, "alert alert-info");
                 TeamGridView.DataSource = null;
                 TeamGridView.DataBind();
             }
@@ -65,6 +75,7 @@ namespace BigFootWebApp.ExercisePages
                     AssistantCoach.Text = infoT.AssistantCoach;
                     Wins.Text = infoT.Wins == null ? "0" : infoT.Wins.ToString();
                     Losses.Text = infoT.Losses == null ? "0" : infoT.Losses.ToString();
+                    
 
                 }
                 catch (Exception ex)

@@ -36,9 +36,11 @@ namespace FSISSystem.JBarnsley.Data
 
         private string _Gender;
 
-        public string AlbertaHealthCareNumber { get; set; }
+
         [Required(ErrorMessage = "Alberta Health care number is required")]
         [RegularExpression(@"^[1-9]{1}\d{9}", ErrorMessage = "Must be 10 digits with first digit starts with 1-9")]
+        public string AlbertaHealthCareNumber { get; set; }
+        
 
         private string _MedicalAlertDetails;
 
